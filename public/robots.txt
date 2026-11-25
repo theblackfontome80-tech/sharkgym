@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sharkgym.rayantriki.com/sitemap.xml

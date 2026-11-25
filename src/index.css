@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #05070b;
+  --color-coal: #0b0e14;
+  --color-graphite: #141922;
+  --color-steel: #8a94a6;
+  --color-abyss: #04122e;
+  --color-deep: #0a2a6b;
+  --color-electric: #1f6bff;
+  --color-volt: #4d8dff;
+  --color-ice: #dbe7ff;
+  --color-paper: #f2f4f8;
+
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-shark: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-reverse: marquee 46s linear infinite reverse;
+
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  html, body { overflow-x: clip; }
+  body {
+    @apply bg-ink font-sans text-white antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--color-electric); color: #fff; }
+  section[id] { scroll-margin-top: 64px; }
+  :focus-visible { outline: 2px solid var(--color-volt); outline-offset: 3px; }
+  img { user-select: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  }
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility text-outline-thin {
+  color: transparent;
+  -webkit-text-stroke: 1px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Grain photographique très léger pour la profondeur */
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Traitement photo homogène sur tout le site */
+@utility photo {
+  filter: saturate(0.82) contrast(1.06) brightness(0.92);
+}
+
+@utility clip-bite {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
